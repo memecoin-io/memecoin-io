@@ -1,0 +1,19 @@
+[features]
+seeds = false
+skip-lint = false
+
+[programs.localnet]
+memecoin = "CuJx7BY4Zu9tJzbDTGGTm8tMpE1v2PTEeecB5qfCmhs3"
+
+[programs.devnet]
+memecoin = "CuJx7BY4Zu9tJzbDTGGTm8tMpE1v2PTEeecB5qfCmhs3"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"

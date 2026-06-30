@@ -1,0 +1,61 @@
+# Rust / Anchor build artifacts
+target/
+**/*.rs.bk
+Cargo.lock.bak
+
+# Anchor
+.anchor/
+contracts/.anchor/
+contracts/target/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Solana / test validator
+test-ledger/
+ledger/
+devnet/ledger/
+devnet/test-ledger/
+
+# Keypairs — NEVER commit
+*.json
+!package.json
+!tsconfig.json
+!Anchor.toml.example
+!contracts/Anchor.toml
+devnet/keys/
+devnet/keys-*/
+devnet/test-driver/state.json
+
+# IDL build output (regenerated)
+contracts/target/idl/
+contracts/target/types/
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+secrets/
+
+# Logs
+*.log
+logs/
+
+# Python (test sims)
+__pycache__/
+*.pyc
+.venv/
+
+# OS junk
+Thumbs.db
