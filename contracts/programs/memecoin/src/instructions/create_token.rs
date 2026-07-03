@@ -1,6 +1,10 @@
 use anchor_lang::prelude::*;
 use anchor_lang::system_program;
 use anchor_spl::associated_token::AssociatedToken;
+use anchor_spl::metadata::{
+    create_metadata_accounts_v3, mpl_token_metadata::types::DataV2, CreateMetadataAccountsV3,
+    Metadata,
+};
 use anchor_spl::token::{self, Mint, MintTo, Token, TokenAccount};
 
 use crate::errors::MemecoinError;
@@ -84,9 +88,15 @@ pub struct CreateToken<'info> {
     )]
     pub curve_token_account: Box<Account<'info, TokenAccount>>,
 
+    /// CHECK: Metaplex metadata PDA — seeds ["metadata", token_metadata_program, mint].
+    /// The derivation and address are validated inside the CreateMetadataAccountV3 CPI.
+    #[account(mut)]
+    pub metadata: UncheckedAccount<'info>,
+
     pub system_program: Program<'info, System>,
     pub token_program: Program<'info, Token>,
     pub associated_token_program: Program<'info, AssociatedToken>,
+    pub token_metadata_program: Program<'info, Metadata>,
     pub rent: Sysvar<'info, Rent>,
 }
 
@@ -154,6 +164,39 @@ pub fn handler(ctx: Context<CreateToken>, params: CreateTokenParams) -> Result<(
             signer_seeds,
         ),
         mint_amount,
+    )?;
+
+    // === Create Metaplex on-chain metadata (name / symbol / uri) ===
+    // The mint_authority PDA is both the mint authority and the update
+    // authority, so the same seeds sign the CreateMetadataAccountV3 CPI.
+    // is_mutable = true keeps the uri updatable later; update_authority is a
+    // signer so the graduation-authority pattern is unaffected.
+    create_metadata_accounts_v3(
+        CpiContext::new_with_signer(
+            ctx.accounts.token_metadata_program.to_account_info(),
+            CreateMetadataAccountsV3 {
+                metadata: ctx.accounts.metadata.to_account_info(),
+                mint: ctx.accounts.mint.to_account_info(),
+                mint_authority: ctx.accounts.mint_authority.to_account_info(),
+                payer: ctx.accounts.creator.to_account_info(),
+                update_authority: ctx.accounts.mint_authority.to_account_info(),
+                system_program: ctx.accounts.system_program.to_account_info(),
+                rent: ctx.accounts.rent.to_account_info(),
+            },
+            signer_seeds,
+        ),
+        DataV2 {
+            name: params.name.clone(),
+            symbol: params.symbol.clone(),
+            uri: params.uri.clone(),
+            seller_fee_basis_points: 0,
+            creators: None,
+            collection: None,
+            uses: None,
+        },
+        true,
+        true,
+        None,
     )?;
 
     // === Initialize TokenLaunch state ===
