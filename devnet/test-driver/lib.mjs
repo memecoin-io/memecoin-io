@@ -17,6 +17,7 @@ const REPO_ROOT = join(__dirname, "..", "..");
 export const RPC = process.env.MEMECOIN_RPC || "http://127.0.0.1:8899";
 export const KEYS = process.env.MEMECOIN_KEYS_DIR || join(REPO_ROOT, "devnet", "keys");
 export const PROGRAM_ID = new PublicKey("CuJx7BY4Zu9tJzbDTGGTm8tMpE1v2PTEeecB5qfCmhs3");
+export const METAPLEX_PROGRAM_ID = new PublicKey("metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s");
 export const STATE_FILE = process.env.MEMECOIN_STATE_FILE || join(__dirname, "state.json");
 
 export function loadKp(name) {
@@ -58,6 +59,13 @@ export function pdaMintAuthority(mint) {
   return PublicKey.findProgramAddressSync(
     [Buffer.from("mint_authority"), mint.toBuffer()],
     PROGRAM_ID,
+  );
+}
+
+export function pdaMetadata(mint) {
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from("metadata"), METAPLEX_PROGRAM_ID.toBuffer(), mint.toBuffer()],
+    METAPLEX_PROGRAM_ID,
   );
 }
 

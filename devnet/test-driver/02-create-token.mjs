@@ -18,10 +18,12 @@ import {
   loadKp,
   disc,
   PROGRAM_ID,
+  METAPLEX_PROGRAM_ID,
   pdaConfig,
   pdaLaunch,
   pdaVault,
   pdaMintAuthority,
+  pdaMetadata,
   loadState,
   saveState,
 } from "./lib.mjs";
@@ -49,12 +51,14 @@ const [configPda] = pdaConfig();
 const [launchPda] = pdaLaunch(mintKp.publicKey);
 const [vaultPda] = pdaVault(mintKp.publicKey);
 const [mintAuthPda] = pdaMintAuthority(mintKp.publicKey);
+const [metadataPda] = pdaMetadata(mintKp.publicKey);
 
 const curveAta = getAssociatedTokenAddressSync(mintKp.publicKey, launchPda, true);
 
 console.log("Launch PDA:", launchPda.toBase58());
 console.log("Vault PDA:", vaultPda.toBase58());
 console.log("Mint authority PDA:", mintAuthPda.toBase58());
+console.log("Metadata PDA:", metadataPda.toBase58());
 console.log("Curve ATA:", curveAta.toBase58());
 
 const data = Buffer.concat([
@@ -74,9 +78,11 @@ const ix = new TransactionInstruction({
     { pubkey: launchPda, isSigner: false, isWritable: true },
     { pubkey: vaultPda, isSigner: false, isWritable: true },
     { pubkey: curveAta, isSigner: false, isWritable: true },
+    { pubkey: metadataPda, isSigner: false, isWritable: true },
     { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
     { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
     { pubkey: ASSOCIATED_TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
+    { pubkey: METAPLEX_PROGRAM_ID, isSigner: false, isWritable: false },
     { pubkey: SYSVAR_RENT_PUBKEY, isSigner: false, isWritable: false },
   ],
   data,
@@ -95,6 +101,7 @@ state.mint_secret = Array.from(mintKp.secretKey);
 state.launch_pda = launchPda.toBase58();
 state.vault_pda = vaultPda.toBase58();
 state.mint_auth_pda = mintAuthPda.toBase58();
+state.metadata_pda = metadataPda.toBase58();
 state.curve_ata = curveAta.toBase58();
 state.create_token_sig = sig;
 saveState(state);

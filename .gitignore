@@ -32,7 +32,8 @@ devnet/keys-*/
 devnet/test-driver/state.json
 
 # IDL build output (regenerated)
-contracts/target/idl/
+# contracts/target/idl/  # un-ignored: memecoin.json is checked in (see idl commit)
+!contracts/target/idl/memecoin.json
 contracts/target/types/
 
 # IDE / editor
@@ -59,3 +60,10 @@ __pycache__/
 
 # OS junk
 Thumbs.db
+
+# Fix 1 IDL exception (see chore(idl) commit): the checked-in IDL is the
+# source of truth for clients until `anchor idl build` works again with
+# our anchor/rustc combo.
+!contracts/target/
+!contracts/target/idl/
+!contracts/target/idl/memecoin.json

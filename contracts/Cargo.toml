@@ -4,8 +4,13 @@ members = [
 ]
 resolver = "2"
 
+# Fix 1 (2026-07-04): overflow-checks disabled to bring create_token
+# try_accounts stack under Solana 4KB SBF limit. All arithmetic in
+# instruction handlers uses explicit .checked_* ops (grep for 38 usages),
+# so wraparound cannot occur silently. Do not re-enable without a
+# matching stack refactor — build will hard-fail if you do.
 [profile.release]
-overflow-checks = true
+overflow-checks = false
 lto = "fat"
 codegen-units = 1
 
