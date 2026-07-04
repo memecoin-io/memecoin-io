@@ -1,0 +1,1243 @@
+{
+  "address": "CuJx7BY4Zu9tJzbDTGGTm8tMpE1v2PTEeecB5qfCmhs3",
+  "metadata": {
+    "name": "memecoin",
+    "version": "0.5.0",
+    "spec": "0.1.0",
+    "description": "Memecoin.io bonding-curve launchpad with DINO buyback flywheel"
+  },
+  "instructions": [
+    {
+      "name": "initialize_config",
+      "discriminator": [
+        208,
+        127,
+        21,
+        1,
+        194,
+        190,
+        196,
+        70
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "InitializeConfigParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_config",
+      "discriminator": [
+        29,
+        158,
+        252,
+        191,
+        10,
+        83,
+        219,
+        99
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "UpdateConfigParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "set_paused",
+      "discriminator": [
+        174,
+        84,
+        205,
+        87,
+        180,
+        201,
+        198,
+        215
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "paused",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "create_token",
+      "discriminator": [
+        84,
+        52,
+        204,
+        228,
+        24,
+        140,
+        234,
+        75
+      ],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "launch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "curve_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  1
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJe8bv"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "CreateTokenParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "buy",
+      "discriminator": [
+        102,
+        6,
+        61,
+        18,
+        1,
+        218,
+        235,
+        234
+      ],
+      "accounts": [
+        {
+          "name": "buyer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "launch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "curve_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "curve_token_account",
+          "writable": true
+        },
+        {
+          "name": "buyer_token_account",
+          "writable": true
+        },
+        {
+          "name": "creator_wallet",
+          "writable": true
+        },
+        {
+          "name": "dino_buyback_wallet",
+          "writable": true
+        },
+        {
+          "name": "treasury_wallet",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_amount_out",
+          "type": "u64"
+        },
+        {
+          "name": "max_sol_in",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "sell",
+      "discriminator": [
+        51,
+        230,
+        133,
+        164,
+        1,
+        127,
+        131,
+        173
+      ],
+      "accounts": [
+        {
+          "name": "seller",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "launch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "curve_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "curve_token_account",
+          "writable": true
+        },
+        {
+          "name": "seller_token_account",
+          "writable": true
+        },
+        {
+          "name": "creator_wallet",
+          "writable": true
+        },
+        {
+          "name": "dino_buyback_wallet",
+          "writable": true
+        },
+        {
+          "name": "treasury_wallet",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "token_amount_in",
+          "type": "u64"
+        },
+        {
+          "name": "min_sol_out",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "graduate",
+      "discriminator": [
+        240,
+        159,
+        125,
+        72,
+        19,
+        95,
+        64,
+        163
+      ],
+      "accounts": [
+        {
+          "name": "caller",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "launch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint",
+          "writable": true
+        },
+        {
+          "name": "curve_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  105,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "graduation_authority",
+          "writable": true
+        },
+        {
+          "name": "graduation_authority_token_account",
+          "writable": true
+        },
+        {
+          "name": "dino_buyback_wallet",
+          "writable": true
+        },
+        {
+          "name": "treasury_wallet",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJe8bv"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "seal_graduation",
+      "discriminator": [
+        67,
+        116,
+        203,
+        205,
+        234,
+        26,
+        92,
+        56
+      ],
+      "accounts": [
+        {
+          "name": "graduation_authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "launch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch.mint"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "meteora_lb_pair",
+          "type": "pubkey"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Config",
+      "discriminator": [
+        155,
+        12,
+        170,
+        224,
+        30,
+        250,
+        204,
+        130
+      ]
+    },
+    {
+      "name": "TokenLaunch",
+      "discriminator": [
+        146,
+        161,
+        148,
+        118,
+        43,
+        247,
+        128,
+        21
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "ConfigInitialized",
+      "discriminator": [
+        195,
+        68,
+        222,
+        78,
+        218,
+        127,
+        85,
+        218
+      ]
+    },
+    {
+      "name": "ConfigUpdated",
+      "discriminator": [
+        203,
+        82,
+        121,
+        227,
+        250,
+        12,
+        106,
+        215
+      ]
+    },
+    {
+      "name": "TokenCreated",
+      "discriminator": [
+        228,
+        172,
+        50,
+        68,
+        246,
+        217,
+        119,
+        55
+      ]
+    },
+    {
+      "name": "TradeExecuted",
+      "discriminator": [
+        238,
+        95,
+        235,
+        191,
+        184,
+        143,
+        219,
+        34
+      ]
+    },
+    {
+      "name": "TokenGraduated",
+      "discriminator": [
+        20,
+        82,
+        196,
+        230,
+        215,
+        33,
+        66,
+        211
+      ]
+    },
+    {
+      "name": "PoolSeeded",
+      "discriminator": [
+        134,
+        200,
+        48,
+        115,
+        214,
+        120,
+        207,
+        81
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Paused",
+      "msg": "Program is paused"
+    },
+    {
+      "code": 6001,
+      "name": "Unauthorized",
+      "msg": "Unauthorized \u2014 admin only"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidFeeSplit",
+      "msg": "Invalid fee configuration \u2014 splits must sum to 10000 bps"
+    },
+    {
+      "code": 6003,
+      "name": "FeeBpsTooHigh",
+      "msg": "Fee basis points exceed maximum (1000 = 10%)"
+    },
+    {
+      "code": 6004,
+      "name": "AlreadyGraduated",
+      "msg": "Token has already graduated \u2014 trading on curve disabled"
+    },
+    {
+      "code": 6005,
+      "name": "NotReadyToGraduate",
+      "msg": "Token has not reached graduation threshold"
+    },
+    {
+      "code": 6006,
+      "name": "SlippageExceeded",
+      "msg": "Slippage exceeded \u2014 SOL required is more than max_sol_in"
+    },
+    {
+      "code": 6007,
+      "name": "InsufficientSolOut",
+      "msg": "Slippage exceeded \u2014 SOL returned is less than min_sol_out"
+    },
+    {
+      "code": 6008,
+      "name": "InsufficientReserves",
+      "msg": "Insufficient token reserves on curve"
+    },
+    {
+      "code": 6009,
+      "name": "MathOverflow",
+      "msg": "Math overflow"
+    },
+    {
+      "code": 6010,
+      "name": "MathUnderflow",
+      "msg": "Math underflow"
+    },
+    {
+      "code": 6011,
+      "name": "ZeroBuyAmount",
+      "msg": "Buy amount must be greater than zero"
+    },
+    {
+      "code": 6012,
+      "name": "ZeroSellAmount",
+      "msg": "Sell amount must be greater than zero"
+    },
+    {
+      "code": 6013,
+      "name": "NameTooLong",
+      "msg": "Token name too long (max 32 bytes)"
+    },
+    {
+      "code": 6014,
+      "name": "SymbolTooLong",
+      "msg": "Token symbol too long (max 10 bytes)"
+    },
+    {
+      "code": 6015,
+      "name": "UriTooLong",
+      "msg": "Metadata URI too long (max 200 bytes)"
+    },
+    {
+      "code": 6016,
+      "name": "InvalidWallet",
+      "msg": "Invalid wallet \u2014 cannot be system program or zero"
+    },
+    {
+      "code": 6017,
+      "name": "InvalidThreshold",
+      "msg": "Graduation threshold must be greater than zero"
+    },
+    {
+      "code": 6018,
+      "name": "NotGraduated",
+      "msg": "Token has not graduated yet"
+    },
+    {
+      "code": 6019,
+      "name": "PoolAlreadySeeded",
+      "msg": "Meteora pool already seeded for this token"
+    },
+    {
+      "code": 6020,
+      "name": "InvalidPoolAddress",
+      "msg": "Invalid Meteora pool address"
+    },
+    {
+      "code": 6021,
+      "name": "BetaCapExceeded",
+      "msg": "Beta cap exceeded - real_sol_reserves would exceed MAX_REAL_SOL_RESERVES"
+    },
+    {
+      "code": 6022,
+      "name": "MissingMetadataAccounts",
+      "msg": "Missing metadata accounts in remaining_accounts"
+    },
+    {
+      "code": 6023,
+      "name": "InvalidMetadataProgram",
+      "msg": "Metadata program key mismatch"
+    },
+    {
+      "code": 6024,
+      "name": "InvalidMetadataAccount",
+      "msg": "Invalid metadata account (PDA derivation mismatch or not writable)"
+    },
+    {
+      "code": 6025,
+      "name": "InvalidRentSysvar",
+      "msg": "Invalid rent sysvar in remaining_accounts"
+    }
+  ],
+  "types": [
+    {
+      "name": "Config",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "dino_buyback_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "treasury_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "graduation_authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "trade_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "trade_split_creator_bps",
+            "type": "u16"
+          },
+          {
+            "name": "trade_split_dino_bps",
+            "type": "u16"
+          },
+          {
+            "name": "trade_split_treasury_bps",
+            "type": "u16"
+          },
+          {
+            "name": "creation_fee_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "creation_split_dino_bps",
+            "type": "u16"
+          },
+          {
+            "name": "graduation_fee_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "graduation_split_dino_bps",
+            "type": "u16"
+          },
+          {
+            "name": "graduation_threshold_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "paused",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TokenLaunch",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          },
+          {
+            "name": "real_sol_reserves",
+            "type": "u64"
+          },
+          {
+            "name": "real_token_reserves",
+            "type": "u64"
+          },
+          {
+            "name": "virtual_sol_reserves",
+            "type": "u64"
+          },
+          {
+            "name": "virtual_token_reserves",
+            "type": "u64"
+          },
+          {
+            "name": "tokens_sold",
+            "type": "u64"
+          },
+          {
+            "name": "graduated",
+            "type": "bool"
+          },
+          {
+            "name": "pool_seeded",
+            "type": "bool"
+          },
+          {
+            "name": "meteora_lb_pair",
+            "type": "pubkey"
+          },
+          {
+            "name": "graduation_sol_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "graduation_token_amount",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "vault_bump",
+            "type": "u8"
+          },
+          {
+            "name": "mint_authority_bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CreateTokenParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "type": "string"
+          },
+          {
+            "name": "mint_authority_bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitializeConfigParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dino_buyback_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "treasury_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "graduation_authority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateConfigParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "dino_buyback_wallet",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "treasury_wallet",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "graduation_authority",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "trade_fee_bps",
+            "type": {
+              "option": "u16"
+            }
+          },
+          {
+            "name": "trade_split_creator_bps",
+            "type": {
+              "option": "u16"
+            }
+          },
+          {
+            "name": "trade_split_dino_bps",
+            "type": {
+              "option": "u16"
+            }
+          },
+          {
+            "name": "trade_split_treasury_bps",
+            "type": {
+              "option": "u16"
+            }
+          },
+          {
+            "name": "creation_fee_lamports",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "creation_split_dino_bps",
+            "type": {
+              "option": "u16"
+            }
+          },
+          {
+            "name": "graduation_fee_lamports",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "graduation_split_dino_bps",
+            "type": {
+              "option": "u16"
+            }
+          },
+          {
+            "name": "graduation_threshold_lamports",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "paused",
+            "type": {
+              "option": "bool"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
