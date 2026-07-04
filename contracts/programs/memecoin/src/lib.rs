@@ -52,9 +52,9 @@ pub mod memecoin {
 
     /// Create a new token + bonding curve. Anyone can call.
     /// Pays the creation fee, splits 50/50 to DINO buyback / treasury.
-    pub fn create_token(
-        ctx: Context<CreateToken>,
-        params: CreateTokenParams,
+    pub fn create_token<'info>(
+        ctx: Context<'_, '_, '_, 'info, CreateToken<'info>>,
+        params: Box<CreateTokenParams>,
     ) -> Result<()> {
         instructions::create_token::handler(ctx, params)
     }

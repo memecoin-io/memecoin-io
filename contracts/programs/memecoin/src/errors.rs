@@ -67,4 +67,16 @@ pub enum MemecoinError {
 
     #[msg("Beta cap exceeded - real_sol_reserves would exceed MAX_REAL_SOL_RESERVES")]
     BetaCapExceeded,
+
+    #[msg("Metadata accounts missing from remaining_accounts (expected metadata + token_metadata_program)")]
+    MissingMetadataAccounts,
+
+    #[msg("Invalid Metaplex Token Metadata program")]
+    InvalidMetadataProgram,
+
+    #[msg("Invalid metadata account (PDA derivation mismatch or not writable)")]
+    InvalidMetadataAccount,
+
+    #[msg("Invalid rent sysvar in remaining_accounts")]
+    InvalidRentSysvar,
 }
